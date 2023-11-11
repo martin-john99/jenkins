@@ -11,12 +11,10 @@ pipeline {
 
         stage('List VMs') {
             steps {
-                // This executes the list_vms.sh script
-                script {
-                    sh '''
-                    chmod +x list_vms.sh
-                    ./list_vms.sh
-                    '''
+                // Use the sshagent to provide the SSH credentials
+                sshagent(credentials: ['65139dcb-f15d-4508-b845-403924d9ecaf']) {
+                    // Execute the command directly via SSH
+                    sh 'ssh -o StrictHostKeyChecking=no r730xd-esxi "esxcli vm process list"'
                 }
             }
         }
