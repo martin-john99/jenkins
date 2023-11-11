@@ -30,5 +30,19 @@ pipeline {
                 }
             }
         }
+    post {
+        success {
+            discordSend description: "Success! Build Succeeded: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'https://discord.com/api/webhooks/1172928868491989012/MgEZZPQI8xCuuY2LIhfIA8yGlbjha3gS84xrzBLSlHPkXu8tt3CWV6nqgIVrNasbiIvy'
+        }
+        failure {
+            discordSend description: "Failure! Build Failed: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'https://discord.com/api/webhooks/1172928868491989012/MgEZZPQI8xCuuY2LIhfIA8yGlbjha3gS84xrzBLSlHPkXu8tt3CWV6nqgIVrNasbiIvy'
+        }
+        unstable {
+            discordSend description: "Unstable! Build Unstable: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'https://discord.com/api/webhooks/1172928868491989012/MgEZZPQI8xCuuY2LIhfIA8yGlbjha3gS84xrzBLSlHPkXu8tt3CWV6nqgIVrNasbiIvy'
+        }
+        always {
+            discordSend description: "Finished! Build Finished: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'https://discord.com/api/webhooks/1172928868491989012/MgEZZPQI8xCuuY2LIhfIA8yGlbjha3gS84xrzBLSlHPkXu8tt3CWV6nqgIVrNasbiIvy'
+        }
     }
 }
+
