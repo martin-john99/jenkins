@@ -19,12 +19,12 @@ pipeline {
                         sh '''
                         #!/bin/bash
                         /usr/bin/pwsh -Command "& {
-                            Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false
-                            Connect-VIServer -Server $VCENTER_SERVER -User $env:VCENTER_USER -Password $env:VCENTER_PASSWORD
-                            $vmhost = Get-VMHost $VM_HOST
-                            $template = Get-Template -Name $TEMPLATE_NAME -Location $vmhost
-                            New-VM -Name $NEW_VM_NAME -Template $template -VMHost $vmhost
-                            Disconnect-VIServer -Server $VCENTER_SERVER -Confirm:$False
+                            Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:\$false
+                            Connect-VIServer -Server \$VCENTER_SERVER -User \$env:VCENTER_USER -Password \$env:VCENTER_PASSWORD
+                            \$vmhost = Get-VMHost \$VM_HOST
+                            \$template = Get-Template -Name \$TEMPLATE_NAME -Location \$vmhost
+                            New-VM -Name \$NEW_VM_NAME -Template \$template -VMHost \$vmhost
+                            Disconnect-VIServer -Server \$VCENTER_SERVER -Confirm:\$False
                         }"
                         '''
                     }
