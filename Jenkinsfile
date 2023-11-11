@@ -24,7 +24,7 @@ pipeline {
                             $vmhost = Get-VMHost $VM_HOST
                             $template = Get-Template -Name $TEMPLATE_NAME -Location $vmhost
                             New-VM -Name $NEW_VM_NAME -Template $template -VMHost $vmhost
-                            Disconnect-VIServer -Server $VCENTER_SERVER -Confirm:\$false
+                            Disconnect-VIServer -Server $VCENTER_SERVER -Confirm: $false
                         }"
                         '''
                     }
