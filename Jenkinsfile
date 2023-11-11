@@ -2,12 +2,13 @@ pipeline {
     agent any
 
     environment {
+        // Define environment variables here
         VCENTER_SERVER = 'vcenter.ptl.lan'
         VCENTER_USER = 'administrator@vsphere.local'
         VCENTER_PASSWORD = 'Zbear!1015'
         VM_HOST = '192.168.10.97'
         TEMPLATE_NAME = 'Ubuntu'
-        NEW_VM_NAME = 'test-vm'
+        NEW_VM_NAME = 'pipeline-vm-test'
     }
 
     stages {
@@ -30,6 +31,8 @@ pipeline {
                 }
             }
         }
+    }
+
     post {
         success {
             discordSend description: "Success! Build Succeeded: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'https://discord.com/api/webhooks/1172928868491989012/MgEZZPQI8xCuuY2LIhfIA8yGlbjha3gS84xrzBLSlHPkXu8tt3CWV6nqgIVrNasbiIvy'
@@ -45,4 +48,3 @@ pipeline {
         }
     }
 }
-
