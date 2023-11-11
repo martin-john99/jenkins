@@ -10,7 +10,7 @@ pipeline {
 
         stage('List VMs') {
             steps {
-                sshagent(credentials: ['id_ecdsa']) {
+                sshagent(credentials: ['65139dcb-f15d-4508-b845-403924d9ecaf']) {
                     sh 'ssh root@r730xd-esxi"esxcli vm process list"'
                 }
             }
@@ -18,7 +18,7 @@ pipeline {
 
         stage('List Network Interfaces') {
             steps {
-                sshagent(credentials: ['id_ecdsa']) {
+                sshagent(credentials: ['65139dcb-f15d-4508-b845-403924d9ecaf']) {
                     sh 'ssh root@r730xd-esxi"esxcli network nic list"'
                 }
             }
