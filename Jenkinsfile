@@ -1,25 +1,24 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout Code') {
-            steps {
-                checkout scm // This checks out your repository, including the get-date.ps1 script
-            }
-        }
-
-        stage('Run PowerShell Script') {
+        stage('Run PowerShell on ESXi') {
             steps {
                 script {
-                    // Call the PowerShell script using pwsh (PowerShell Core)
-                    sh 'pwsh -File get-date.ps1'
+                    // Define ESXi host credentials using Jenkins credentials ID
+                    def remote = [:]
+                    remote.name = ''
+                    remote.host = 'r730xd-esxi'
+                    remote.user = 'root'
+                    remote.credentialsId = '65139dcb-f15d-4508-b845-403924d9ecaf'
+
+                    // Define the command to execute the PowerShell script
+                    def command = "powershell -File /pa"
+
+                    // Establish SSH connection and execute the command
+                    sshCommand remote: remote, command: command
                 }
             }
         }
-    }
-
-    post {
-        // Your post-build actions
     }
 }
 
