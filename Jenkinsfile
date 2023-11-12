@@ -2,13 +2,12 @@ pipeline {
     agent any
 
     environment {
-        // Define environment variables here
-        VCENTER_SERVER = 'vcenter.ptl.lan'
+        VCENTER_SERVER = 'http://vcenter.ptl.lan'
         VCENTER_USER = 'administrator@vsphere.local'
         VCENTER_PASSWORD = 'Zbear!1015'
-        VM_HOST = '192.168.10.97'
+        VM_HOST = 'r730xd-esxi'
         TEMPLATE_NAME = 'Ubuntu'
-        NEW_VM_NAME = 'pipeline-vm-test'
+        NEW_VM_NAME = 'new-vm'
     }
 
     stages {
@@ -20,11 +19,11 @@ pipeline {
                         #!/bin/bash
                         /usr/bin/pwsh -Command "& {
                             Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:\$false
-                            Connect-VIServer -Server \$VCENTER_SERVER -User \$env:VCENTER_USER -Password \$env:VCENTER_PASSWORD
+                            Connect-VIServer -Server $VCENTER_SERVER -User \$env:VCENTER_USER -Password \$env:VCENTER_PASSWORD
                             \$vmhost = Get-VMHost \$VM_HOST
                             \$template = Get-Template -Name \$TEMPLATE_NAME -Location \$vmhost
                             New-VM -Name \$NEW_VM_NAME -Template \$template -VMHost \$vmhost
-                            Disconnect-VIServer -Server \$VCENTER_SERVER -Confirm:\$False
+                            Disconnect-VIServer -Server \$VCENTER_SERVER -Confirm:\$false
                         }"
                         '''
                     }
@@ -35,16 +34,16 @@ pipeline {
 
     post {
         success {
-            discordSend description: "Success! Build Succeeded: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'https://discord.com/api/webhooks/1172928868491989012/MgEZZPQI8xCuuY2LIhfIA8yGlbjha3gS84xrzBLSlHPkXu8tt3CWV6nqgIVrNasbiIvy'
+            discordSend description: "Success! Build Succeeded: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'Your Discord Webhook URL'
         }
         failure {
-            discordSend description: "Failure! Build Failed: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'https://discord.com/api/webhooks/1172928868491989012/MgEZZPQI8xCuuY2LIhfIA8yGlbjha3gS84xrzBLSlHPkXu8tt3CWV6nqgIVrNasbiIvy'
+            discordSend description: "Failure! Build Failed: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'Your Discord Webhook URL'
         }
         unstable {
-            discordSend description: "Unstable! Build Unstable: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'https://discord.com/api/webhooks/1172928868491989012/MgEZZPQI8xCuuY2LIhfIA8yGlbjha3gS84xrzBLSlHPkXu8tt3CWV6nqgIVrNasbiIvy'
+            discordSend description: "Unstable! Build Unstable: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'Your Discord Webhook URL'
         }
         always {
-            discordSend description: "Finished! Build Finished: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'https://discord.com/api/webhooks/1172928868491989012/MgEZZPQI8xCuuY2LIhfIA8yGlbjha3gS84xrzBLSlHPkXu8tt3CWV6nqgIVrNasbiIvy'
+            discordSend description: "Finished! Build Finished: Job '${env.JOB_NAME}' #${env.BUILD_NUMBER}", webhookURL: 'Your Discord Webhook URL'
         }
     }
 }
