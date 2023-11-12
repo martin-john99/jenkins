@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+<<<<<<< HEAD
     environment {
         VCENTER_SERVER = 'vcenter.ptl.lan'
         VCENTER_USER = 'administrator@vsphere.local'
@@ -10,9 +11,12 @@ pipeline {
         NEW_VM_NAME = 'new-vm'
     }
 
+=======
+>>>>>>> 19aa50b (switching back to working Jenkinsfile)
     stages {
-        stage('Create VM from Template') {
+        stage('Checkout Code') {
             steps {
+<<<<<<< HEAD
                 script {
                     withCredentials([usernamePassword(credentialsId: 'vcenter', usernameVariable: 'VCENTER_USER', passwordVariable: 'VCENTER_PASSWORD')]) {
                         sh '''
@@ -26,8 +30,22 @@ pipeline {
                         " | /usr/bin/pwsh
                         '''
                     }
+=======
+                // This checks out the code from your Git repository
+                checkout scm
+            }
+        }
+
+        stage('List VMs') {
+            steps {
+                // Use the sshagent to provide the SSH credentials
+                sshagent(credentials: ['65139dcb-f15d-4508-b845-403924d9ecaf']) {
+                    // Execute the command directly via SSH
+                    sh 'ssh -o StrictHostKeyChecking=no root@r730xd-esxi "esxcli vm process list"'
+>>>>>>> 19aa50b (switching back to working Jenkinsfile)
                 }
             }
         }
     }
 }
+
