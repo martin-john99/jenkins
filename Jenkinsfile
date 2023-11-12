@@ -31,6 +31,20 @@ pipeline {
                 }
             }
         }
+        stage('Check ESXi version') {
+            steps {
+                sshagent(credentials: ['65139dcb-f15d-4508-b845-403924d9ecaf']) {
+                    sh 'ssh root@r730xd-esxi "esxcli system version get"'
+                }
+            }
+        }
+        stage('Check CPU list') {
+            steps {
+                sshagent(credentials: ['65139dcb-f15d-4508-b845-403924d9ecaf']) {
+                    sh 'ssh root@r730xd-esxi "esxcli hardware cpu list"'
+                }
+            }
+        }
     }
     post {
         success {
