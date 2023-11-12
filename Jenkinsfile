@@ -30,8 +30,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        // Post actions...
-    }
 }
